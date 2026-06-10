@@ -1,32 +1,77 @@
 "use client";
-import { Database, ShieldAlert, Upload, Settings } from "lucide-react";
+import { Database, Upload, ShieldAlert, Settings } from "lucide-react";
 
 export default function AdminDashboard() {
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <h1 className="text-3xl font-bold mb-8 text-white/90">System Administration</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border border-white/10 rounded-xl bg-white/[0.02]">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2"><Database className="w-5 h-5 text-indigo-400"/> Qdrant Vector Sync</h2>
-          <p className="text-white/50 mb-4">Re-index all government scheme PDFs from MyScheme into Qdrant embeddings.</p>
-          <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-medium transition-colors">Start Full Re-index</button>
+    <div style={{ minHeight: "100vh", background: "#FAF7F2" }}>
+      <header style={{
+        background: "#fff", borderBottom: "1px solid #E5E7EB",
+        padding: "20px 32px"
+      }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <h1 style={{ fontSize: 24, fontWeight: 800, color: "#1F2937" }}>System Administration</h1>
+          <p style={{ fontSize: 14, color: "#6B7280", marginTop: 4 }}>Manage RAG indexes, schemes, and security.</p>
         </div>
-        <div className="p-6 border border-white/10 rounded-xl bg-white/[0.02]">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2"><Upload className="w-5 h-5 text-green-400"/> Scheme PDF Upload</h2>
-          <p className="text-white/50 mb-4">Upload new government gazettes to dynamically update eligibility rules.</p>
-          <button className="px-4 py-2 border border-white/20 hover:bg-white/10 rounded-lg font-medium transition-colors">Upload Document</button>
+      </header>
+
+      <main style={{ maxWidth: 1280, margin: "0 auto", padding: 32 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20 }}>
+          <AdminCard
+            icon={<Database size={22} />}
+            color="#1565C0" bg="#E3F2FD"
+            title="Qdrant Vector Sync"
+            desc="Re-index all government scheme PDFs from MyScheme into multilingual Qdrant embeddings."
+            action="Start Full Re-index"
+            primary
+          />
+          <AdminCard
+            icon={<Upload size={22} />}
+            color="#2E7D32" bg="#E8F5E9"
+            title="Scheme PDF Upload"
+            desc="Upload new government gazettes to dynamically update eligibility rules and RAG corpus."
+            action="Upload Document"
+          />
+          <AdminCard
+            icon={<ShieldAlert size={22} />}
+            color="#C62828" bg="#FFEBEE"
+            title="Audit Logs & PII"
+            desc="View Aadhaar redaction metrics, access logs, and compliance reports."
+            action="View Logs"
+          />
+          <AdminCard
+            icon={<Settings size={22} />}
+            color="#6D4C41" bg="#EFEBE9"
+            title="Global Configuration"
+            desc="Manage rate limits, agent orchestration routes, language models, and API fallbacks."
+            action="Configure"
+          />
         </div>
-        <div className="p-6 border border-white/10 rounded-xl bg-white/[0.02]">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2"><ShieldAlert className="w-5 h-5 text-red-400"/> Audit Logs & PII</h2>
-          <p className="text-white/50 mb-4">View redaction metrics and raw system access logs.</p>
-          <button className="px-4 py-2 border border-white/20 hover:bg-white/10 rounded-lg font-medium transition-colors">View Logs</button>
-        </div>
-        <div className="p-6 border border-white/10 rounded-xl bg-white/[0.02]">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2"><Settings className="w-5 h-5 text-gray-400"/> Global Config</h2>
-          <p className="text-white/50 mb-4">Manage rate limits, agent orchestration routes, and API fallbacks.</p>
-          <button className="px-4 py-2 border border-white/20 hover:bg-white/10 rounded-lg font-medium transition-colors">Configure</button>
-        </div>
+      </main>
+    </div>
+  );
+}
+
+function AdminCard({ icon, color, bg, title, desc, action, primary }: {
+  icon: React.ReactNode; color: string; bg: string;
+  title: string; desc: string; action: string; primary?: boolean;
+}) {
+  return (
+    <div className="card" style={{ padding: 28 }}>
+      <div style={{
+        width: 44, height: 44, borderRadius: 12, background: bg,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        color, marginBottom: 20
+      }}>
+        {icon}
       </div>
+      <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1F2937", marginBottom: 8 }}>{title}</h2>
+      <p style={{ fontSize: 14, color: "#6B7280", lineHeight: 1.6, marginBottom: 24 }}>{desc}</p>
+      <button
+        className={primary ? "btn-primary" : "btn-secondary"}
+        style={{ padding: "12px 20px", width: "100%", borderRadius: 12 }}
+      >
+        {action}
+      </button>
     </div>
   );
 }

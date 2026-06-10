@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { LanguageProvider } from "@/i18n/provider";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Saarthi AI | Multilingual Welfare Copilot",
-  description: "Your digital copilot for discovering and applying to government welfare schemes. Voice-first, intelligent, and proactive.",
+  title: "Saarthi AI – Multilingual Welfare Copilot",
+  description: "Discover government schemes, prepare documents, and apply with confidence.",
 };
 
 export default function RootLayout({
@@ -18,9 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("dark", "font-sans", geist.variable)}>
-      <body className={`${inter.className} bg-black text-white antialiased min-h-screen selection:bg-indigo-500 selection:text-white`}>
-        {children}
+    <html lang="hi">
+      <body
+        className={`${inter.variable}`}
+        style={{ fontFamily: "'Inter', system-ui, -apple-system, sans-serif" }}
+      >
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
