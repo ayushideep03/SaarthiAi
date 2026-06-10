@@ -1,0 +1,11 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+# Don't fail if package.json doesn't exist yet, this is just scaffolding
+RUN npm install || true
+
+COPY . .
+
+CMD ["npm", "run", "dev"]
